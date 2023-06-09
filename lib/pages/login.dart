@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:myfirstapp/utils/routes.dart';
 
-class LogIn extends StatelessWidget {
+class LogIn extends StatefulWidget {
   const LogIn({super.key});
 
+  @override
+  State<LogIn> createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  String name = "";
+  String man = "";
+  bool change = false;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -18,7 +26,7 @@ class LogIn extends StatelessWidget {
             height: 24.0,
           ),
           Text(
-            "Welcome Back.",
+            "Welcome$man$name",
             style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -39,6 +47,11 @@ class LogIn extends StatelessWidget {
                     hintText: "Enter your username.",
                     labelText: "Username",
                   ),
+                  onChanged: (value) {
+                    name = value;
+                    man = ",";
+                    setState(() {});
+                  },
                 ),
                 TextFormField(
                   obscureText: true,
@@ -53,12 +66,40 @@ class LogIn extends StatelessWidget {
           SizedBox(
             height: 40.0,
           ),
-          ElevatedButton(
-              style: TextButton.styleFrom(minimumSize: Size(200, 45)),
-              onPressed: () {
-                Navigator.pushNamed(context, MyRoutes.homeRoute);
-              },
-              child: Text("Login"))
+          InkWell(
+            onTap: () async {
+              setState(() {
+                change = true;
+              });
+              await Future.delayed(Duration(seconds: 1, milliseconds: 2));
+              Navigator.pushNamed(context, MyRoutes.homeRoute);
+            },
+            child: AnimatedContainer(
+              duration: Duration(seconds: 1),
+              decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(change ? 45 : 8)),
+              alignment: Alignment.center,
+              width: change ? 45 : 150,
+              height: 45,
+              child: change
+                  ? Icon(
+                      Icons.done,
+                      color: Colors.white,
+                    )
+                  : Text(
+                      "Login",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+            ),
+          )
+
+          // ElevatedButton(
+          //     style: TextButton.styleFrom(minimumSize: Size(200, 45)),
+          //     onPressed: () {
+          //
+          //     },
+          //     child: Text("Login"))
         ],
       ),
     );
