@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfirstapp/utils/routes.dart';
 
 class LogIn extends StatelessWidget {
   const LogIn({super.key});
@@ -14,12 +15,12 @@ class LogIn extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           SizedBox(
-            height: 20.0,
+            height: 24.0,
           ),
           Text(
             "Welcome Back.",
             style: TextStyle(
-                fontSize: 18,
+                fontSize: 24,
                 fontWeight: FontWeight.w600,
                 color: Color.fromARGB(255, 148, 37, 217)),
           ),
@@ -50,11 +51,12 @@ class LogIn extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20.0,
+            height: 40.0,
           ),
           ElevatedButton(
+              style: TextButton.styleFrom(minimumSize: Size(200, 45)),
               onPressed: () {
-                print("Bobby");
+                Navigator.pushNamed(context, MyRoutes.homeRoute);
               },
               child: Text("Login"))
         ],
