@@ -1,22 +1,98 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+
 class CatalogModel {
-  static final items = [
-    Items(
-        "Product01",
-        "Iphone 12 pro max",
-        "osadsapojsadpadjadpd",
-        999,
-        "Colors.green",
-        "https://images.unsplash.com/photo-1607936854279-55e8a4c64888?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aXBob25lJTIwMTJ8ZW58MHx8MHx8fDA%3D&w=1000&q=80"),
-  ];
+  static List<Items> items = [];
 }
 
 class Items {
-  final String id;
+  final int id;
   final String name;
   final String desc;
   final num price;
   final String color;
-  final String imageUrl;
+  final String image;
 
-  Items(this.id, this.name, this.desc, this.price, this.color, this.imageUrl);
+  Items(
+    this.id,
+    this.name,
+    this.desc,
+    this.price,
+    this.color,
+    this.image,
+  );
+
+  Items copyWith({
+    int? id,
+    String? name,
+    String? desc,
+    num? price,
+    String? color,
+    String? image,
+  }) {
+    return Items(
+      id ?? this.id,
+      name ?? this.name,
+      desc ?? this.desc,
+      price ?? this.price,
+      color ?? this.color,
+      image ?? this.image,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'desc': desc,
+      'price': price,
+      'color': color,
+      'image': image,
+    };
+  }
+
+  factory Items.fromMap(Map<String, dynamic> map) {
+    return Items(
+      map['id'] as int,
+      map['name'] as String,
+      map['desc'] as String,
+      map['price'] as num,
+      map['color'] as String,
+      map['image'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Items.fromJson(String source) =>
+      Items.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Items(id: $id, name: $name, desc: $desc, price: $price, color: $color, image: $image)';
+  }
+
+  @override
+  bool operator ==(covariant Items other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.name == name &&
+        other.desc == desc &&
+        other.price == price &&
+        other.color == color &&
+        other.image == image;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        desc.hashCode ^
+        price.hashCode ^
+        color.hashCode ^
+        image.hashCode;
+  }
 }
